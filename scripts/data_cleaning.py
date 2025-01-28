@@ -31,22 +31,60 @@ class DataCleaner:
     def handle_missing_values(self):
         logging.info("Handling missing values...")
         
-        for col in self.data.select_dtypes(include=[np.number]).columns:
-            self.data[col] = self.data[col].fillna(self.data[col].median())
-        
-        
-        for col in self.data.select_dtypes(include=[object]).columns:
-            self.data[col] = self.data[col].fillna(self.data[col].mode()[0])
-        logging.info("Missing values handled.")
+        # Check initial shape
+        logging.info(f"Initial shape of data: {self.data.shape}")
+
+        # Impute numerical columns with median
+        numeric_cols = self.data.select_dtypes(include=[np.number]).columns
+        for col in numeric_cols:
+            if self.data[col].isnull().sum() > 0:
+                self.data[col] = self.data[col].fillna(self.data[col].median())
+
+        # Impute categorical columns with mode
+        categorical_cols = self.data.select_dtypes(include=[object]).columns
+        for col in categorical_cols:
+            if self.data[col].isnull().sum() > 0:
+                self.data[col] = self.data[col].fillna(self.data[col].mode()[0])
+
+        # Log remaining missing values
+        missing_summary = self.data.isnull().sum()
+        logging.info(f"Remaining missing values:\n{missing_summary}")
+
+        # Drop columns with too many missing values (threshold: 80%)
+        missing_threshold = 0.8
+        cols_to_drop = missing_summary[missing_summary > len(self.data) * missing_threshold].index
+        self.data.drop(columns=cols_to_drop, inplace=True)
+        logging.info(f"Dropped columns with > {missing_threshold*100}% missing values: {cols_to_drop.tolist()}")
+
+        # Check final shape
+        logging.info(f"Final shape of data after handling missing values: {self.data.shape}")
+
 
 
     def handle_outliers(self):
         logging.info("Handling outliers...")
-        
         numeric_cols = self.data.select_dtypes(include=[np.number]).columns
-        z_scores = (self.data[numeric_cols] - self.data[numeric_cols].mean()) / self.data[numeric_cols].std()
-        self.data = self.data[(z_scores.abs() < 3).all(axis=1)]
+
+        initial_shape = self.data.shape
+        for col in numeric_cols:
+            Q1 = self.data[col].quantile(0.25)
+            Q3 = self.data[col].quantile(0.75)
+            IQR = Q3 - Q1
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+
+            # Log the number of outliers for each column
+            outliers = ((self.data[col] < lower_bound) | (self.data[col] > upper_bound)).sum()
+            logging.info(f"Column {col}: {outliers} outliers detected")
+
+            # Remove outliers (consider skipping if removing too many rows)
+            self.data = self.data[(self.data[col] >= lower_bound) & (self.data[col] <= upper_bound)]
+
         logging.info(f"Data shape after removing outliers: {self.data.shape}")
+        if self.data.empty:
+            logging.warning("Warning: All rows removed after outlier handling!")
+            self.data = self.original_data.copy()  # Restore data if completely removed
+
 
     def convert_data_types(self):
         logging.info("Converting data types...")

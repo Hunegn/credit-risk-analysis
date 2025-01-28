@@ -1,15 +1,14 @@
-2025-01-28 11:37:04,218 - INFO - DataCleaner initialized.
-2025-01-28 11:37:04,218 - INFO - Loading data...
-2025-01-28 11:37:34,132 - INFO - DataCleaner initialized.
-2025-01-28 11:37:34,132 - INFO - Loading data...
-2025-01-28 11:37:34,614 - INFO - Data loaded with shape: (95662, 16)
-2025-01-28 11:37:34,614 - INFO - Inspecting data...
-2025-01-28 11:37:34,615 - INFO - Columns: Index(['TransactionId', 'BatchId', 'AccountId', 'SubscriptionId', 'CustomerId',
+
+2025-01-28 11:59:07,896 - INFO - DataCleaner initialized.
+2025-01-28 11:59:07,896 - INFO - Loading data...
+2025-01-28 11:59:08,231 - INFO - Data loaded with shape: (95662, 16)
+2025-01-28 11:59:08,231 - INFO - Inspecting data...
+2025-01-28 11:59:08,231 - INFO - Columns: Index(['TransactionId', 'BatchId', 'AccountId', 'SubscriptionId', 'CustomerId',
        'CurrencyCode', 'CountryCode', 'ProviderId', 'ProductId',
        'ProductCategory', 'ChannelId', 'Amount', 'Value',
        'TransactionStartTime', 'PricingStrategy', 'FraudResult'],
       dtype='object')
-2025-01-28 11:37:34,668 - INFO - Missing values:
+2025-01-28 11:59:08,274 - INFO - Missing values:
 TransactionId           0
 BatchId                 0
 AccountId               0
@@ -27,24 +26,9 @@ TransactionStartTime    0
 PricingStrategy         0
 FraudResult             0
 dtype: int64
-2025-01-28 11:37:34,668 - INFO - Handling missing values...
-2025-01-28 11:37:35,155 - INFO - Missing values handled.
-2025-01-28 11:37:35,156 - INFO - Handling outliers...
-2025-01-28 11:37:35,189 - INFO - Data shape after removing outliers: (0, 16)
-2025-01-28 11:37:35,189 - INFO - Converting data types...
-2025-01-28 11:37:35,189 - INFO - Saving cleaned data...
-2025-01-28 11:37:35,190 - INFO - Cleaned data saved to ../data/processed/cleaned_data.csv
-2025-01-28 11:42:13,454 - INFO - DataCleaner initialized.
-2025-01-28 11:43:40,819 - INFO - DataCleaner initialized.
-2025-01-28 11:43:40,820 - INFO - Loading data...
-2025-01-28 11:43:41,272 - INFO - Data loaded with shape: (95662, 16)
-2025-01-28 11:43:41,272 - INFO - Inspecting data...
-2025-01-28 11:43:41,273 - INFO - Columns: Index(['TransactionId', 'BatchId', 'AccountId', 'SubscriptionId', 'CustomerId',
-       'CurrencyCode', 'CountryCode', 'ProviderId', 'ProductId',
-       'ProductCategory', 'ChannelId', 'Amount', 'Value',
-       'TransactionStartTime', 'PricingStrategy', 'FraudResult'],
-      dtype='object')
-2025-01-28 11:43:41,321 - INFO - Missing values:
+2025-01-28 11:59:08,274 - INFO - Handling missing values...
+2025-01-28 11:59:08,274 - INFO - Initial shape of data: (95662, 16)
+2025-01-28 11:59:08,400 - INFO - Remaining missing values:
 TransactionId           0
 BatchId                 0
 AccountId               0
@@ -62,10 +46,15 @@ TransactionStartTime    0
 PricingStrategy         0
 FraudResult             0
 dtype: int64
-2025-01-28 11:43:41,321 - INFO - Handling missing values...
-2025-01-28 11:43:41,720 - INFO - Missing values handled.
-2025-01-28 11:43:41,720 - INFO - Handling outliers...
-2025-01-28 11:43:41,750 - INFO - Data shape after removing outliers: (0, 16)
-2025-01-28 11:43:41,752 - INFO - Converting data types...
-2025-01-28 11:43:41,752 - INFO - Saving cleaned data...
-2025-01-28 11:43:41,753 - INFO - Cleaned data saved to ../data/processed/cleaned_data.csv
+2025-01-28 11:59:08,424 - INFO - Dropped columns with > 80.0% missing values: []
+2025-01-28 11:59:08,424 - INFO - Final shape of data after handling missing values: (95662, 16)
+2025-01-28 11:59:08,424 - INFO - Handling outliers...
+2025-01-28 11:59:08,432 - INFO - Column CountryCode: 0 outliers detected
+2025-01-28 11:59:08,460 - INFO - Column Amount: 24441 outliers detected
+2025-01-28 11:59:08,490 - INFO - Column Value: 6948 outliers detected
+2025-01-28 11:59:08,515 - INFO - Column PricingStrategy: 6988 outliers detected
+2025-01-28 11:59:08,538 - INFO - Column FraudResult: 2 outliers detected
+2025-01-28 11:59:08,554 - INFO - Data shape after removing outliers: (57283, 16)
+2025-01-28 11:59:08,555 - INFO - Converting data types...
+2025-01-28 11:59:08,555 - INFO - Saving cleaned data...
+2025-01-28 11:59:09,288 - INFO - Cleaned data saved to ../data/processed/cleaned_data.csv
