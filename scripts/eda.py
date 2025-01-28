@@ -5,7 +5,7 @@ import seaborn as sns
 import logging
 import os
 
-# Setup logging
+
 logging.basicConfig(
     filename="../logs/eda_detailed.log",
     level=logging.INFO,
@@ -72,14 +72,14 @@ class EDA:
         logging.info("Plotting categorical feature distributions...")
         categorical_cols = self.data.select_dtypes(include=['object']).columns
 
-        # Ensure the plots directory exists
+        
         plots_dir = "../plots"
         os.makedirs(plots_dir, exist_ok=True)
 
         for col in categorical_cols:
             plt.figure(figsize=(8, 4))
             
-            # Get the top N categories
+            
             value_counts = self.data[col].value_counts().nlargest(top_n)
             sns.barplot(y=value_counts.index, x=value_counts.values, palette='viridis')
             
